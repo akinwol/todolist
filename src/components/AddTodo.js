@@ -1,0 +1,53 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+export class AddTodo extends Component {
+
+    state = {
+        title:''
+    }
+
+    onChange = (e)=>{
+        this.setState({
+            // instead of this title:e.target.value
+            //and doing this for each form parameter
+            [e.target.name]:e.target.value
+            //the above works as long as your input title 
+            //is the same as your state you are updating 
+        })
+    }
+    onSubmit = (e)=>{
+        e.preventDefault()
+        this.props.addTodo(this.state.title)
+        this.setState({title:''})
+    }
+
+    render() {
+        return (
+            <form 
+            onSubmit={this.onSubmit}
+            style={{ display: 'flex' }}>
+                <input 
+                type='text' 
+                name='title' 
+                style={{flex:'10', padding:'5px'}}
+                placeholder='add todo'
+                value={this.state.title}
+                onChange={this.onChange}/>
+                <input 
+                type='submit' 
+                value='Submit'
+                className='btn'
+                style={{ flex: '1' }}/>
+            </form>
+        )
+    }
+}
+// PropTypes
+
+AddTodo.propTypes ={
+    addTodo: PropTypes.func.isRequired
+  }
+
+
+export default AddTodo
